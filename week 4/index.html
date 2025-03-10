@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trò Chơi Tài Xỉu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .dice {
+            font-size: 40px;
+            margin: 10px;
+        }
+        .plate {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            margin: 20px auto;
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            transform: rotate(180deg); /* Để bát úp lên trên đĩa */
+        }
+
+        /* Đĩa chứa xúc xắc */
+        .disk {
+            width: 200px;
+            height: 50px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        /* Xúc xắc trong bát */
+        .dice-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        /* Animation lắc xúc xắc */
+        @keyframes shakeDice {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-10px, -10px); }
+            50% { transform: translate(10px, -10px); }
+            75% { transform: translate(-10px, 10px); }
+            100% { transform: translate(10px, 10px); }
+        }
+
+        /* Khi đang lắc, xúc xắc sẽ chuyển động */
+        .shaking {
+            animation: shakeDice 1s ease-in-out infinite;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Trò Chơi Tài Xỉu</h1>
+    <div>
+        <button class="button" onclick="playGame('tai')">Chọn Tài</button>
+        <button class="button" onclick="playGame('xiu')">Chọn Xỉu</button>
+    </div>
+    <!-- Đĩa -->
+    <div class="disk">
+        <!-- Bát úp trên đĩa -->
+        <div class="plate">
+            <div class="dice-container" id="dice-container">
+                <!-- Viên xúc xắc 1, 2, 3, 4 -->
+                <div class="dice" id="dice1">🎲</div>
+                <div class="dice" id="dice2">🎲</div>
+                <div class="dice" id="dice3">🎲</div>
+                <div class="dice" id="dice4">🎲</div>
+            </div>
+        </div>
+    </div>
+    <div class="result" id="result"></div>
+
+    <script>
+        function playGame(choice) {
+            // Giải phóng kết quả cũ
+            document.getElementById('result').innerText = '';
+            document.getElementById('dice1').innerText = '🎲';
+            document.getElementById('dice2').innerText = '🎲';
+            document.getElementById('dice3').innerText = '🎲';
+            document.getElementById('dice4').innerText = '🎲';
+
+            // Bắt đầu hiệu ứng lắc
+            const diceContainer = document.getElementById('dice-container');
+            diceContainer.classList.add('shaking'); // Bắt đầu lắc
+
+            // Tạo kết quả xí ngầu
+            setTimeout(() => {
+                const dice1 = Math.floor(Math.random() * 6) + 1;
+                const dice2 = Math.floor(Math.random() * 6) + 1;
+                const dice3 = Math.floor(Math.random() * 6) + 1;
+                const dice4 = Math.floor(Math.random() * 6) + 1;
+
+                // Hiển thị xí ngầu
+                document.getElementById('dice1').innerText = `🎲 ${dice1}`;
+                document.getElementById('dice2').innerText = `🎲 ${dice2}`;
+                document.getElementById('dice3').innerText = `🎲 ${dice3}`;
+                document.getElementById('dice4').innerText = `🎲 ${dice4}`;
+
+                // Tính tổng xí ngầu
+                const total = dice1 + dice2 + dice3 + dice4;
+
+                // Kiểm tra kết quả
+                const isTai = total > 10;
+                const isXiu = total <= 10;
+
+                // Kiểm tra kết quả dựa trên sự lựa chọn
+                if (choice === 'tai' && isTai) {
+                    document.getElementById('result').innerText = `Chúc mừng! Bạn thắng (Tài). Tổng xí ngầu: ${total}`;
+                } else if (choice === 'xiu' && isXiu) {
+                    document.getElementById('result').innerText = `Chúc mừng! Bạn thắng (Xỉu). Tổng xí ngầu: ${total}`;
+                } else {
+                    document.getElementById('result').innerText = `Rất tiếc! Bạn thua. Tổng xí ngầu: ${total}`;
+                }
+
+                // Dừng hiệu ứng lắc sau khi tính kết quả
+                diceContainer.classList.remove('shaking');
+            }, 1000); // Lắc trong 1 giây
+        }
+    </script>
+</body>
+</html>
+
+

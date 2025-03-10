@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trò Chơi Tài Xỉu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .dice {
+            font-size: 40px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Trò Chơi Tài Xỉu</h1>
+    <div>
+        <button class="button" onclick="playGame('tai')">Chọn Tài</button>
+        <button class="button" onclick="playGame('xiu')">Chọn Xỉu</button>
+    </div>
+    <div class="dice" id="dice1">🎲</div>
+    <div class="dice" id="dice2">🎲</div>
+    <div class="dice" id="dice3">🎲</div>
+    <div class="result" id="result"></div>
+</body>
